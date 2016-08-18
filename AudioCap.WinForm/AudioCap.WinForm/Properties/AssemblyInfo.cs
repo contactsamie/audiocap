@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("AudioCap.WinForm")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Record and save audio from audio out")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AudioCap.WinForm")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("https://github.com/contactsamie")]
+[assembly: AssemblyProduct("AudioCap")]
+[assembly: AssemblyCopyright("Copyright https://github.com/contactsamie ©  2016")]
+[assembly: AssemblyTrademark("https://github.com/contactsamie")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

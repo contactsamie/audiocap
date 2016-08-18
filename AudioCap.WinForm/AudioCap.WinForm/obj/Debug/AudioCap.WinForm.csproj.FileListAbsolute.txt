@@ -16,3 +16,6 @@ C:\Users\dom\Desktop\AudioCap\AudioCap.WinForm\AudioCap.WinForm\obj\Debug\AudioC
 C:\Users\dom\Desktop\AudioCap\AudioCap.WinForm\AudioCap.WinForm\obj\Debug\AudioCap.WinForm.csproj.GenerateResource.Cache
 C:\Users\dom\Desktop\AudioCap\AudioCap.WinForm\AudioCap.WinForm\obj\Debug\AudioCap.WinForm.exe
 C:\Users\dom\Desktop\AudioCap\AudioCap.WinForm\AudioCap.WinForm\obj\Debug\AudioCap.WinForm.pdb
+C:\Users\dom\Documents\GitHub\audiocap\AudioCap.WinForm\AudioCap.WinForm\bin\Debug\AudioCap.WinForm.exe.config
+C:\Users\dom\Documents\GitHub\audiocap\AudioCap.WinForm\AudioCap.WinForm\obj\Debug\AudioCap.WinForm.exe
+C:\Users\dom\Documents\GitHub\audiocap\AudioCap.WinForm\AudioCap.WinForm\obj\Debug\AudioCap.WinForm.pdb
