@@ -96,5 +96,10 @@ namespace AudioCap.WinForm
 
             webBrowser1.Refresh();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
