@@ -5,11 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CSCore;
+using CSCore.Codecs;
 using CSCore.Codecs.WAV;
 using CSCore.SoundIn;
 using NAudio.Lame;
 using NAudio.Wave;
 using WasapiLoopbackCapture = CSCore.SoundIn.WasapiLoopbackCapture;
+
+using MediaFoundationEncoder = CSCore.MediaFoundation.MediaFoundationEncoder;
 
 namespace AudioCap.Lib
 {
@@ -75,17 +78,59 @@ namespace AudioCap.Lib
                 ,
                 DeviceNumber = 0
             };
-        public void Play(string text)
+        public TimeSpan Play(string text)
         {
             var reader = new NAudio.Wave.AudioFileReader(text);
             _outputter.Init(reader);
-            _outputter.Play(); 
+            _outputter.Play();
+            return reader.TotalTime;
         }
 
 
         public void Stop()
         {
             _outputter.Stop();
+          
         }
+        public void CutL(int positionMiliseconds,double totalSize, string text)
+        {
+            text = text.Replace("wav", "mp3");
+            _outputter.Dispose();
+            CutAnMp3File(text,TimeSpan.FromMilliseconds(positionMiliseconds), TimeSpan.FromMilliseconds(totalSize));
+        }
+
+        public void CutR(int positionMiliseconds, string text)
+        {
+            text = text.Replace("wav", "mp3");
+            _outputter.Dispose();
+            CutAnMp3File(text, TimeSpan.FromMilliseconds(0),  TimeSpan.FromMilliseconds(positionMiliseconds) );
+        }
+
+        public void CutAnMp3File(string fileName, TimeSpan start, TimeSpan end)
+        {
+            var startTimeSpan = start;
+            var endTimeSpan = end;
+            using (IWaveSource source = CodecFactory.Instance.GetCodec(fileName))
+            using (var mediaFoundationEncoder = MediaFoundationEncoder.CreateWMAEncoder(source.WaveFormat, fileName.Replace(".", "") + "_cut.mp3"))
+            {
+                AddTimeSpan(source, mediaFoundationEncoder, startTimeSpan, endTimeSpan);
+            }
+        }
+        private static void AddTimeSpan(IWaveSource source, IWriteable mediaFoundationEncoder, TimeSpan startTimeSpan, TimeSpan endTimeSpan)
+        {
+            source.SetPosition(startTimeSpan);
+
+            int read = 0;
+            long bytesToEncode = source.GetBytes(endTimeSpan - startTimeSpan);
+
+            var buffer = new byte[source.WaveFormat.BytesPerSecond];
+            while ((read = source.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                int bytesToWrite = (int)Math.Min(read, bytesToEncode);
+                mediaFoundationEncoder.Write(buffer, 0, bytesToWrite);
+                bytesToEncode -= bytesToWrite;
+            }
+        }
+
     }
 }

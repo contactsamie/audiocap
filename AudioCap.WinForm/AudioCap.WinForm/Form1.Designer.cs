@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.button1 = new System.Windows.Forms.Button();
             this.txt_folder = new System.Windows.Forms.TextBox();
@@ -45,9 +46,14 @@
             this.lblFileName = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.button8 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -108,6 +114,8 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox2.Controls.Add(this.button9);
+            this.groupBox2.Controls.Add(this.button8);
             this.groupBox2.Controls.Add(this.button7);
             this.groupBox2.Controls.Add(this.button6);
             this.groupBox2.Controls.Add(this.button5);
@@ -116,13 +124,13 @@
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Location = new System.Drawing.Point(12, 140);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(339, 127);
+            this.groupBox2.Size = new System.Drawing.Size(339, 134);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(188, 59);
+            this.button7.Location = new System.Drawing.Point(188, 38);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(140, 23);
             this.button7.TabIndex = 5;
@@ -132,7 +140,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(187, 30);
+            this.button6.Location = new System.Drawing.Point(187, 9);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(140, 23);
             this.button6.TabIndex = 4;
@@ -142,7 +150,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(187, 88);
+            this.button5.Location = new System.Drawing.Point(187, 67);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(141, 23);
             this.button5.TabIndex = 3;
@@ -152,7 +160,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(11, 88);
+            this.button4.Location = new System.Drawing.Point(11, 67);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(156, 23);
             this.button4.TabIndex = 2;
@@ -162,7 +170,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(11, 59);
+            this.button3.Location = new System.Drawing.Point(11, 38);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(156, 23);
             this.button3.TabIndex = 1;
@@ -172,7 +180,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(11, 30);
+            this.button2.Location = new System.Drawing.Point(11, 9);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(156, 23);
             this.button2.TabIndex = 0;
@@ -194,7 +202,7 @@
             // 
             this.lblFileName.AutoSize = true;
             this.lblFileName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblFileName.Location = new System.Drawing.Point(22, 273);
+            this.lblFileName.Location = new System.Drawing.Point(22, 277);
             this.lblFileName.Name = "lblFileName";
             this.lblFileName.Size = new System.Drawing.Size(18, 15);
             this.lblFileName.TabIndex = 4;
@@ -208,7 +216,7 @@
             this.groupBox3.Controls.Add(this.webBrowser1);
             this.groupBox3.Location = new System.Drawing.Point(12, 312);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(339, 219);
+            this.groupBox3.Size = new System.Drawing.Size(339, 121);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             // 
@@ -220,8 +228,39 @@
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
             this.webBrowser1.ScriptErrorsSuppressed = true;
-            this.webBrowser1.Size = new System.Drawing.Size(333, 200);
+            this.webBrowser1.Size = new System.Drawing.Size(333, 102);
             this.webBrowser1.TabIndex = 0;
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.Location = new System.Drawing.Point(12, 447);
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(339, 45);
+            this.trackBar1.TabIndex = 6;
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(188, 97);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(59, 23);
+            this.button8.TabIndex = 6;
+            this.button8.Text = "Cut L";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(267, 96);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(56, 23);
+            this.button9.TabIndex = 7;
+            this.button9.Text = "Cut R";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // Form1
             // 
@@ -229,7 +268,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::AudioCap.WinForm.Properties.Resources.Black_And_White_Wallpaper_Music_7;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(361, 541);
+            this.ClientSize = new System.Drawing.Size(361, 504);
+            this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.lblOutPut);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -245,6 +285,7 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -269,6 +310,10 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button button8;
     }
 }
 

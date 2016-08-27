@@ -9,3 +9,4 @@ C:\Users\dom\Documents\GitHub\audiocap\AudioCap.WinForm\AudioCap.Lib\bin\Debug\C
 C:\Users\dom\Documents\GitHub\audiocap\AudioCap.WinForm\AudioCap.Lib\bin\Debug\NAudio.xml
 C:\Users\dom\Documents\GitHub\audiocap\AudioCap.WinForm\AudioCap.Lib\obj\Debug\AudioCap.Lib.dll
 C:\Users\dom\Documents\GitHub\audiocap\AudioCap.WinForm\AudioCap.Lib\obj\Debug\AudioCap.Lib.pdb
+C:\Users\dom\Documents\GitHub\audiocap\AudioCap.WinForm\AudioCap.Lib\obj\Debug\AudioCap.Lib.csprojResolveAssemblyReference.cache

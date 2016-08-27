@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AudioCap.Lib;
+using CSCore;
+using CSCore.Codecs;
+using CSCore.MediaFoundation;
 
 namespace AudioCap.WinForm
 {
@@ -58,24 +61,35 @@ namespace AudioCap.WinForm
         {
             UpdateFileName();
         }
-
+        int interval = 100;
+        private double totalSize = 0;
         private void button6_Click(object sender, EventArgs e)
         {
             try
             {
-   if (System.IO.File.Exists(lblFileName.Text))
-            _audioCapLib.Play(lblFileName.Text);
+                if (System.IO.File.Exists(lblFileName.Text))
+                {
+                    trackBar1.Minimum = 0;
+                    trackBar1.Value = 0;
+                    timer1.Interval = interval;
+                    var duration = _audioCapLib.Play(lblFileName.Text);
+                    totalSize = duration.TotalMilliseconds;
+                    trackBar1.Maximum = (int)((duration.TotalMilliseconds) / interval);
+                    timer1.Enabled = true;
+                }
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.Message);
             }
          
         }
 
+        private int positionMiliseconds = 0; 
         private void button7_Click(object sender, EventArgs e)
         {
+            positionMiliseconds= trackBar1.Value + interval;
+            timer1.Enabled = false;
             _audioCapLib.Stop();
         }
 
@@ -101,5 +115,27 @@ namespace AudioCap.WinForm
         {
 
         }
-    }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            
+            trackBar1.Value += 1;
+            Text = trackBar1.Value.ToString();
+            if (trackBar1.Value >= trackBar1.Maximum)
+            {
+                timer1.Enabled = false;
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            _audioCapLib.CutL(positionMiliseconds, totalSize,lblFileName.Text);
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            _audioCapLib.CutR(positionMiliseconds, lblFileName.Text);
+        }
+
+     }
 }
