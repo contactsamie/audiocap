@@ -36,6 +36,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtFileName = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button9 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
@@ -48,8 +50,7 @@
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -127,6 +128,26 @@
             this.groupBox2.Size = new System.Drawing.Size(339, 134);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(267, 96);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(56, 23);
+            this.button9.TabIndex = 7;
+            this.button9.Text = "Cut R";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(188, 97);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(59, 23);
+            this.button8.TabIndex = 6;
+            this.button8.Text = "Cut L";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button7
             // 
@@ -216,7 +237,7 @@
             this.groupBox3.Controls.Add(this.webBrowser1);
             this.groupBox3.Location = new System.Drawing.Point(12, 312);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(339, 121);
+            this.groupBox3.Size = new System.Drawing.Size(339, 98);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             // 
@@ -228,7 +249,7 @@
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
             this.webBrowser1.ScriptErrorsSuppressed = true;
-            this.webBrowser1.Size = new System.Drawing.Size(333, 102);
+            this.webBrowser1.Size = new System.Drawing.Size(333, 79);
             this.webBrowser1.TabIndex = 0;
             // 
             // trackBar1
@@ -242,25 +263,14 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // button8
+            // label2
             // 
-            this.button8.Location = new System.Drawing.Point(188, 97);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(59, 23);
-            this.button8.TabIndex = 6;
-            this.button8.Text = "Cut L";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
-            // 
-            // button9
-            // 
-            this.button9.Location = new System.Drawing.Point(267, 96);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(56, 23);
-            this.button9.TabIndex = 7;
-            this.button9.Text = "Cut R";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(15, 428);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "label2";
             // 
             // Form1
             // 
@@ -269,6 +279,7 @@
             this.BackgroundImage = global::AudioCap.WinForm.Properties.Resources.Black_And_White_Wallpaper_Music_7;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(361, 504);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.lblOutPut);
             this.Controls.Add(this.groupBox3);
@@ -314,6 +325,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Label label2;
     }
 }
 

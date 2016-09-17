@@ -108,13 +108,15 @@ namespace AudioCap.Lib
 
         public void CutAnMp3File(string fileName, TimeSpan start, TimeSpan end)
         {
-            var startTimeSpan = start;
+            var name = fileName.Split('.')[0]+"1";
+                var startTimeSpan = start;
             var endTimeSpan = end;
             using (IWaveSource source = CodecFactory.Instance.GetCodec(fileName))
-            using (var mediaFoundationEncoder = MediaFoundationEncoder.CreateWMAEncoder(source.WaveFormat, fileName.Replace(".", "") + "_cut.mp3"))
+            using (var mediaFoundationEncoder = MediaFoundationEncoder.CreateWMAEncoder(source.WaveFormat, name + ".mp3"))
             {
                 AddTimeSpan(source, mediaFoundationEncoder, startTimeSpan, endTimeSpan);
             }
+           // WaveToMp3(name + ".wav", name + ".mp3");
         }
         private static void AddTimeSpan(IWaveSource source, IWriteable mediaFoundationEncoder, TimeSpan startTimeSpan, TimeSpan endTimeSpan)
         {
