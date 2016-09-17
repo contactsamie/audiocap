@@ -28,13 +28,14 @@ namespace AudioCap.WinForm
             {
                 txt_folder.Text = folderBrowserDialog1.SelectedPath;
             }
-            webBrowser1.Navigate(txt_folder.Text);
+          
         }
 
         public void UpdateFileName()
         {
             lblFileName.Text = txt_folder.Text + "\\" + txtFileName.Text+".wav";
             lblOutPut.Text= txt_folder.Text + "\\" + txtFileName.Text+".mp3";
+          
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -60,6 +61,7 @@ namespace AudioCap.WinForm
         private void txt_folder_TextChanged(object sender, EventArgs e)
         {
             UpdateFileName();
+            webBrowser1.Navigate(txt_folder.Text);
         }
         int interval = 100;
         private double totalSize = 0;
@@ -67,19 +69,25 @@ namespace AudioCap.WinForm
         {
             try
             {
-                if (System.IO.File.Exists(lblFileName.Text))
+                if (System.IO.File.Exists(lblOutPut.Text))
                 {
                     trackBar1.Minimum = 0;
                     trackBar1.Value = 0;
                     timer1.Interval = interval;
-                    var duration = _audioCapLib.Play(lblFileName.Text);
+                    var duration = _audioCapLib.Play(lblOutPut.Text);
                     totalSize = duration.TotalMilliseconds;
                     trackBar1.Maximum = (int)((duration.TotalMilliseconds) / interval);
                     timer1.Enabled = true;
                 }
+                else
+                {
+                    if(System.IO.File.Exists(lblFileName.Text))
+                        button4.PerformClick();
+                }
             }
             catch (Exception ex)
             {
+                
                 MessageBox.Show(ex.Message);
             }
          
@@ -88,7 +96,7 @@ namespace AudioCap.WinForm
         private int positionMiliseconds = 0; 
         private void button7_Click(object sender, EventArgs e)
         {
-            positionMiliseconds= trackBar1.Value + interval;
+            positionMiliseconds= trackBar1.Value * interval;
             timer1.Enabled = false;
             _audioCapLib.Stop();
         }
@@ -113,7 +121,8 @@ namespace AudioCap.WinForm
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            txt_folder.Text = "C:\\music";
+            txtFileName.Text = "Sample";
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -121,10 +130,13 @@ namespace AudioCap.WinForm
             
             trackBar1.Value += 1;
             Text = trackBar1.Value.ToString();
+
+            label2.Text = (trackBar1.Value  * interval/1000).ToString()+" s";
             if (trackBar1.Value >= trackBar1.Maximum)
             {
                 timer1.Enabled = false;
             }
+
         }
 
         private void button8_Click(object sender, EventArgs e)
