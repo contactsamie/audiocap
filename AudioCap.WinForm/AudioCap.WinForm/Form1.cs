@@ -63,18 +63,19 @@ namespace AudioCap.WinForm
             UpdateFileName();
             webBrowser1.Navigate(txt_folder.Text);
         }
-        int interval = 100;
+        int interval = 500;
         private double totalSize = 0;
         private void button6_Click(object sender, EventArgs e)
         {
             try
             {
+                    button7.PerformClick();
                     trackBar1.Minimum = 0;
                     trackBar1.Value = 0;
                     timer1.Interval = interval;
-                    var duration = _audioCapLib.Play(lblOutPut.Text);
+                    var duration = button8.Visible? _audioCapLib.Play(textBox3.Text) : _audioCapLib.Play(lblOutPut.Text);
                     totalSize = duration.TotalMilliseconds;
-                    trackBar1.Maximum = (int)((duration.TotalMilliseconds) / interval);
+                    trackBar1.Maximum = (int)(duration.TotalMilliseconds);
                     timer1.Enabled = true;
                
             }
@@ -89,9 +90,17 @@ namespace AudioCap.WinForm
         private int positionMiliseconds = 0; 
         private void button7_Click(object sender, EventArgs e)
         {
-            positionMiliseconds= trackBar1.Value * interval;
-            timer1.Enabled = false;
-            _audioCapLib.Stop();
+            try
+            {
+                positionMiliseconds = trackBar1.Value * interval;
+                timer1.Enabled = false;
+                _audioCapLib.Stop();
+            }
+            catch (Exception)
+            {
+                
+              
+            }
 
         }
 
@@ -104,14 +113,24 @@ namespace AudioCap.WinForm
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            
-            trackBar1.Value += 1;
-            Text = trackBar1.Value.ToString();
 
-            label2.Text = (trackBar1.Value  * interval/1000).ToString()+" s";
-            if (trackBar1.Value >= trackBar1.Maximum)
+            try
             {
+                trackBar1.Value += interval;
+                Text = trackBar1.Value.ToString();
+
+                label2.Text = (trackBar1.Value * interval / 500).ToString() + " s";
+                if (trackBar1.Value >= trackBar1.Maximum)
+                {
+                    timer1.Enabled = false;
+                    button7.PerformClick();
+                }
+            }
+            catch (Exception)
+            {
+
                 timer1.Enabled = false;
+                button7.PerformClick();
             }
         }
 
@@ -139,6 +158,11 @@ namespace AudioCap.WinForm
         private void button8_Click(object sender, EventArgs e)
         {
             button8.Visible = false;
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+            textBox2.Text = (Convert.ToInt32(textBox1.Text) + Convert.ToInt32(Text)).ToString();
         }
     }
 }

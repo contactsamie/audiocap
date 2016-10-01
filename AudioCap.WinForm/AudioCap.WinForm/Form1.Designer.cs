@@ -54,6 +54,7 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label2 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -137,9 +138,9 @@
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(11, 70);
+            this.textBox3.Location = new System.Drawing.Point(11, 41);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(161, 20);
+            this.textBox3.Size = new System.Drawing.Size(314, 20);
             this.textBox3.TabIndex = 13;
             // 
             // button8
@@ -202,9 +203,9 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(188, 38);
+            this.button7.Location = new System.Drawing.Point(250, 67);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(140, 23);
+            this.button7.Size = new System.Drawing.Size(75, 23);
             this.button7.TabIndex = 5;
             this.button7.Text = "Pause/Stop";
             this.button7.UseVisualStyleBackColor = true;
@@ -212,9 +213,9 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(187, 9);
+            this.button6.Location = new System.Drawing.Point(185, 67);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(140, 23);
+            this.button6.Size = new System.Drawing.Size(58, 23);
             this.button6.TabIndex = 4;
             this.button6.Text = "Play";
             this.button6.UseVisualStyleBackColor = true;
@@ -222,9 +223,9 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(11, 38);
+            this.button3.Location = new System.Drawing.Point(185, 9);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(156, 23);
+            this.button3.Size = new System.Drawing.Size(140, 23);
             this.button3.TabIndex = 1;
             this.button3.Text = "Stop Recording";
             this.button3.UseVisualStyleBackColor = true;
@@ -285,6 +286,8 @@
             // 
             // trackBar1
             // 
+            this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBar1.Location = new System.Drawing.Point(12, 447);
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(339, 45);
@@ -296,12 +299,27 @@
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(15, 428);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 13);
             this.label2.TabIndex = 7;
             this.label2.Text = "label2";
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Blue;
+            this.label5.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label5.Location = new System.Drawing.Point(292, 428);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(56, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Mark Now";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // Form1
             // 
@@ -310,6 +328,7 @@
             this.BackgroundImage = global::AudioCap.WinForm.Properties.Resources.Black_And_White_Wallpaper_Music_7;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(361, 504);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.lblOutPut);
@@ -361,6 +380,7 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label5;
     }
 }
 
