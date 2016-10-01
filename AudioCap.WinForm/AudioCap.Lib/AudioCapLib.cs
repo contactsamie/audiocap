@@ -22,23 +22,27 @@ namespace AudioCap.Lib
         private WaveWriter _w;
         public void StartRecord(string file)
         {
-            using (WasapiCapture capture = new WasapiLoopbackCapture())
-            {
                 _capture = new WasapiLoopbackCapture();
                 _capture.Initialize();
                 _w = new WaveWriter(file , _capture.WaveFormat);
                 _capture.DataAvailable += (s, capData) => _w.Write(capData.Data, capData.Offset, capData.ByteCount);
                 _capture.Start();
-            }
         }
         public void StopRecord()
         {
-            if (_w == null || _capture == null) return;
-            _capture.Stop();
-            _w.Dispose();
-            _w = null;
-            _capture.Dispose();
-            _capture = null;
+            if (_capture != null)
+            {
+             _capture.Stop();
+              _capture.Dispose();
+              _capture = null;
+            }
+            if (_w != null)
+            {
+                _w.Dispose();
+                _w = null;
+            }
+         
+          
         }
         public void WaveToMp3(string waveFileName, string mp3FileName, int bitRate = 128)
         {
@@ -70,7 +74,7 @@ namespace AudioCap.Lib
                 reader.CopyTo(writer);
         }
 
-        readonly WaveOut _outputter = new WaveOut()
+         WaveOut _outputter = new WaveOut()
             {
                 DesiredLatency = 5000 //arbitrary but <1k is choppy and >1e5 errors
                 ,
@@ -80,59 +84,72 @@ namespace AudioCap.Lib
             };
         public TimeSpan Play(string text)
         {
-            var reader = new NAudio.Wave.AudioFileReader(text);
-            _outputter.Init(reader);
+             Reader = new NAudio.Wave.AudioFileReader(text);
+            _outputter.Init(Reader);
             _outputter.Play();
-            return reader.TotalTime;
+            return Reader.TotalTime;
         }
+
+        public AudioFileReader Reader { get; set; }
 
 
         public void Stop()
         {
+            Reader.Dispose();
+            Reader = null;
+           
             _outputter.Stop();
-          
+            _outputter.Dispose();
+            _outputter = null;
+           _outputter =  new WaveOut()
+            {
+                DesiredLatency = 5000 //arbitrary but <1k is choppy and >1e5 errors
+                ,
+                NumberOfBuffers = 1 // 1,2,4 all work...
+                ,
+                DeviceNumber = 0
+            };
+
         }
-        public void CutL(int positionMiliseconds,double totalSize, string text)
+        public void TrimL(int positionMiliseconds,double totalSize, string text)
         {
             text = text.Replace("wav", "mp3");
-            _outputter.Dispose();
+           
             CutAnMp3File(text,TimeSpan.FromMilliseconds(positionMiliseconds), TimeSpan.FromMilliseconds(totalSize));
         }
 
-        public void CutR(int positionMiliseconds, string text)
+        public void Trim(int from, int to, string text, string outputFileName)
         {
             text = text.Replace("wav", "mp3");
             _outputter.Dispose();
-            CutAnMp3File(text, TimeSpan.FromMilliseconds(0),  TimeSpan.FromMilliseconds(positionMiliseconds) );
+            CutAnMp3File(text, TimeSpan.FromMilliseconds(from),  TimeSpan.FromMilliseconds(to), outputFileName);
         }
 
-        public void CutAnMp3File(string fileName, TimeSpan start, TimeSpan end)
+        void TrimMp3(string inputPath, string outputPath, TimeSpan? begin, TimeSpan? end)
         {
-            var name = fileName.Split('.')[0]+"1";
-                var startTimeSpan = start;
-            var endTimeSpan = end;
-            using (IWaveSource source = CodecFactory.Instance.GetCodec(fileName))
-            using (var mediaFoundationEncoder = MediaFoundationEncoder.CreateWMAEncoder(source.WaveFormat, name + ".mp3"))
-            {
-                AddTimeSpan(source, mediaFoundationEncoder, startTimeSpan, endTimeSpan);
-            }
-           // WaveToMp3(name + ".wav", name + ".mp3");
-        }
-        private static void AddTimeSpan(IWaveSource source, IWriteable mediaFoundationEncoder, TimeSpan startTimeSpan, TimeSpan endTimeSpan)
-        {
-            source.SetPosition(startTimeSpan);
+            if (begin.HasValue && end.HasValue && begin > end)
+                throw new ArgumentOutOfRangeException("end", "end should be greater than begin");
 
-            int read = 0;
-            long bytesToEncode = source.GetBytes(endTimeSpan - startTimeSpan);
-
-            var buffer = new byte[source.WaveFormat.BytesPerSecond];
-            while ((read = source.Read(buffer, 0, buffer.Length)) > 0)
+            using (var reader = new Mp3FileReader(inputPath))
+            using (var writer = File.Create(outputPath))
             {
-                int bytesToWrite = (int)Math.Min(read, bytesToEncode);
-                mediaFoundationEncoder.Write(buffer, 0, bytesToWrite);
-                bytesToEncode -= bytesToWrite;
+                Mp3Frame frame;
+                while ((frame = reader.ReadNextFrame()) != null)
+                    if (reader.CurrentTime >= begin || !begin.HasValue)
+                    {
+                        if (reader.CurrentTime <= end || !end.HasValue)
+                            writer.Write(frame.RawData, 0, frame.RawData.Length);
+                        else break;
+                    }
             }
         }
 
+       
+        public void CutAnMp3File(string fileName, TimeSpan start, TimeSpan end,string outputFileName=null)
+        {
+          
+            TrimMp3(fileName, outputFileName, start, end);
+        }
+       
     }
 }

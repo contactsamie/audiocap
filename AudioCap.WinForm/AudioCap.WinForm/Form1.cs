@@ -46,13 +46,13 @@ namespace AudioCap.WinForm
         private void button3_Click(object sender, EventArgs e)
         {
             _audioCapLib.StopRecord();
+            _audioCapLib.WaveToMp3(lblFileName.Text, lblOutPut.Text);
+            var duration = _audioCapLib.Play(lblOutPut.Text);
+            _audioCapLib.Stop();
+            textBox2.Text = duration.TotalMilliseconds.ToString();
         }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            _audioCapLib.WaveToMp3(lblFileName.Text,lblOutPut.Text);
-        }
-
+      
         private void txtFileName_TextChanged(object sender, EventArgs e)
         {
             UpdateFileName();
@@ -69,8 +69,6 @@ namespace AudioCap.WinForm
         {
             try
             {
-                if (System.IO.File.Exists(lblOutPut.Text))
-                {
                     trackBar1.Minimum = 0;
                     trackBar1.Value = 0;
                     timer1.Interval = interval;
@@ -78,12 +76,7 @@ namespace AudioCap.WinForm
                     totalSize = duration.TotalMilliseconds;
                     trackBar1.Maximum = (int)((duration.TotalMilliseconds) / interval);
                     timer1.Enabled = true;
-                }
-                else
-                {
-                    if(System.IO.File.Exists(lblFileName.Text))
-                        button4.PerformClick();
-                }
+               
             }
             catch (Exception ex)
             {
@@ -99,26 +92,10 @@ namespace AudioCap.WinForm
             positionMiliseconds= trackBar1.Value * interval;
             timer1.Enabled = false;
             _audioCapLib.Stop();
+
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (System.IO.File.Exists(lblFileName.Text))
-                    System.IO.File.Delete(lblFileName.Text);
-                if (System.IO.File.Exists(lblOutPut.Text))
-                    System.IO.File.Delete(lblOutPut.Text);
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message);
-            }
-
-            webBrowser1.Refresh();
-        }
-
+      
         private void Form1_Load(object sender, EventArgs e)
         {
             txt_folder.Text = "C:\\music";
@@ -136,18 +113,32 @@ namespace AudioCap.WinForm
             {
                 timer1.Enabled = false;
             }
+        }
 
+        private static int history = 0;
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (!button8.Visible)
+            {
+                history++;
+            }
+
+            button8.Visible = true;
+            var fileName = lblFileName.Text;
+            var output = txt_folder.Text+ "\\" + history + ".mp3";
+            textBox3.Text = output;
+            //System.IO.File.Move(fileName, input);
+            //Task.Delay(TimeSpan.FromSeconds(1)).Wait();
+            //System.IO.File.Delete(fileName);
+            //Task.Delay(TimeSpan.FromSeconds(1)).Wait();
+            //var  outputFileName = fileName;
+
+            _audioCapLib.Trim(Convert.ToInt32(textBox1.Text), Convert.ToInt32(textBox2.Text), fileName, output);
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            _audioCapLib.CutL(positionMiliseconds, totalSize,lblFileName.Text);
+            button8.Visible = false;
         }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-            _audioCapLib.CutR(positionMiliseconds, lblFileName.Text);
-        }
-
-     }
+    }
 }
